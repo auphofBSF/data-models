@@ -1,5 +1,3 @@
-from typing import Optional
-
 from typing import Callable
 import typer
 import rich
