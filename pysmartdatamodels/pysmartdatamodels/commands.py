@@ -53,14 +53,18 @@ def list_all_subjects():
 
 
 # 3
-def datamodels_subject(subject: str):
-    """List the names of the entities defined in the data models.
+def datamodels_subject(subject: str, names_only=True):
+    """List the names or full record of the entities defined in the data models.
     Parameters:
         subject: name of the subject
-
+        names_only: (default True)  output only the list of data models for a subject
+                    else output the full JSON object as in `official_list_data_models.json`
     Returns:
        if subject is found
-         array of strings: data models' names belonging to the subject
+         if names_only
+            array of strings: data models' names belonging to the subject
+         else
+            dict of properties(full JSON object as in `official_list_data_models.json` )  about the subject
        if subject is not found
          False
     """
@@ -74,7 +78,10 @@ def datamodels_subject(subject: str):
         for item in datamodelsdict:
             if "repoName" and "dataModels" in item:
                 if item["repoName"] == subject:
-                    output = item["dataModels"]
+                    if names_only:
+                        output = item["dataModels"]
+                    else:
+                        output = item
                     done = True
     if not done:
         output = False
